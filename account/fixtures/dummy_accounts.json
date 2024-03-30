@@ -1,0 +1,33 @@
+[
+    {
+      "model": "account.CustomUser",
+      "pk": null,
+      "fields": {
+        "username": "admin123",
+        "email": "admin@example.com",
+        "password": "strongpassword",
+        "user_type": "admin"
+      }
+    },
+    {
+      "model": "account.CustomUser",
+      "pk": null,
+      "fields": {
+        "username": "manager456",
+        "email": "manager@example.com",
+        "password": "secretmanager",
+        "user_type": "manager"
+      }
+    },
+    {
+      "model": "account.CustomUser",
+      "pk": null,
+      "fields": {
+        "username": "seller789",
+        "email": "seller@example.com",
+        "password": "sellingsmart",
+        "user_type": "seller"
+      }
+    }
+  ]
+  
