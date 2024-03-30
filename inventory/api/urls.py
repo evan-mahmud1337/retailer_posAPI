@@ -1,5 +1,8 @@
 from django.urls import path
-from inventory.api.views import *
+from .views import InventoryCategoryView, InventoryListAPIView, InventoryDetailAPIView
+
 urlpatterns = [
-    path('InventoryCategory/', InventoryCategoryView.as_view(), name='inventory-category'),
+    path('categories/', InventoryCategoryView.as_view()),
+    path('inventory/', InventoryListAPIView.as_view()),
+    path('inventory/<int:pk>/', InventoryDetailAPIView.as_view()),
 ]

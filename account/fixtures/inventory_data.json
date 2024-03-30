@@ -1,0 +1,144 @@
+[
+    {
+      "model": "inventory.InventoryCategory",
+      "pk": 1,
+      "fields": {
+        "name": "Electronics",
+        "additionalInfo": "This category includes various electronic devices."
+      }
+    },
+    {
+      "model": "inventory.InventoryCategory",
+      "pk": 2,
+      "fields": {
+        "name": "Clothing",
+        "additionalInfo": "A wide range of clothing items for all genders and ages."
+      }
+    },
+    {
+      "model": "inventory.InventoryCategory",
+      "pk": 3,
+      "fields": {
+        "name": "Stationery",
+        "additionalInfo": "Essential office and school supplies."
+      }
+    },
+    {
+      "model": "inventory.InventoryItem",
+      "pk": 1,
+      "fields": {
+        "category": 1,
+        "itemName": "Laptop",
+        "unit": 1,
+        "transportationCost": 20,
+        "otherCost": 100,
+        "invImage": null,
+        "created_at": "2024-03-30"
+      }
+    },
+    {
+      "model": "inventory.InventoryItem",
+      "pk": 2,
+      "fields": {
+        "category": 2,
+        "itemName": "T-Shirt",
+        "unit": 5,
+        "transportationCost": 5,
+        "otherCost": 2,
+        "invImage": null,
+        "created_at": "2024-03-30"
+      }
+    },
+    {
+      "model": "inventory.InventoryItem",
+      "pk": 3,
+      "fields": {
+        "category": 3,
+        "itemName": "Pen",
+        "unit": 20,
+        "transportationCost": 1,
+        "otherCost": 0.5,
+        "invImage": null,
+        "created_at": "2024-03-30"
+      }
+    },
+    {
+        "model": "inventory.InventoryItem",
+        "pk": 4,
+        "fields": {
+          "category": 2,
+          "itemName": "Jeans",
+          "unit": 3,
+          "transportationCost": 10,
+          "otherCost": 5,
+          "invImage": null,
+          "created_at": "2024-03-30"
+        }
+      },
+      {
+        "model": "inventory.InventoryItem",
+        "pk": 5,
+        "fields": {
+          "category": 2,
+          "itemName": "Dress",
+          "unit": 2,
+          "transportationCost": 8,
+          "otherCost": 3,
+          "invImage": null,
+          "created_at": "2024-03-30"
+        }
+      },
+      {
+        "model": "inventory.InventoryItem",
+        "pk": 6,
+        "fields": {
+          "category": 2,
+          "itemName": "Shirt",
+          "unit": 4,
+          "transportationCost": 7,
+          "otherCost": 2.5,
+          "invImage": null,
+          "created_at": "2024-03-30"
+        }
+      },
+      {
+        "model": "inventory.InventoryItem",
+        "pk": 7,
+        "fields": {
+          "category": 2,
+          "itemName": "Sweater",
+          "unit": 1,
+          "transportationCost": 12,
+          "otherCost": 4,
+          "invImage": null,
+          "created_at": "2024-03-30"
+        }
+      },
+      {
+        "model": "inventory.InventoryItem",
+        "pk": 8,
+        "fields": {
+          "category": 2,
+          "itemName": "Hat",
+          "unit": 10,
+          "transportationCost": 2,
+          "otherCost": 1,
+          "invImage": null,
+          "created_at": "2024-03-30"
+        }
+      },
+      {
+        "model": "inventory.InventoryItem",
+        "pk": 9,
+        "fields": {
+          "category": 2,
+          "itemName": "Scarf",
+          "unit": 8,
+          "transportationCost": 3,
+          "otherCost": 1.5,
+          "invImage": null,
+          "created_at": "2024-03-30"
+        }
+      }
+  ]
+  

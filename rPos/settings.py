@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # in built apps
     'core',
     'account',
+    'inventory',
     #third party apps
     'rest_framework',
     'rest_framework.authtoken'
