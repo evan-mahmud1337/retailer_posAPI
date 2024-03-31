@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # in built apps
     'core',
+    'inventory',
     'account',
+    'customer_info',
     #third party apps
     'rest_framework',
     'rest_framework.authtoken'
