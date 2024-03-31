@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from sales.models import *
 from .serializers import CustomerSerializer, SaleSerializer
 from django.db import transaction
+from datetime import datetime,timedelta
 
 class SaleCreateView(APIView):
     def get(self, request, format=None):
@@ -56,3 +57,20 @@ class SaleRetrieveView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Sale.DoesNotExist:
             return Response({'error': 'Sale not found'}, status=status.HTTP_404_NOT_FOUND)
+
+class DashboardView(APIView):
+    
+    def get(self, request, format=None):
+        yesterday=datetime.now().date()-timedelta(days=1)
+        print(yesterday)
+        week=datetime.now().date()-timedelta(weeks=1)
+        months=datetime.now().date()-timedelta(days=30)
+
+        total_sale=Sale.objects.count()
+        sale_yesterday=Sale.objects.filter(created_date=yesterday).count()
+        sale_week=Sale.objects.filter(created_date__gte=week).count()
+        sale_month=Sale.objects.filter(created_date__gte=months).count()
+        
+        context={'total_sale':total_sale,'sale_yesterday':sale_yesterday,'sale_week':sale_week,
+                 'sale_month':sale_month}
+        return Response(context, status=status.HTTP_200_OK)
