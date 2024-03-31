@@ -26,8 +26,4 @@ class Sales(models.Model):
     def __str__(self):
         return self.name
     
-    def get_total_price(self):
-        total=self.price
-        discount=self.discount
-        float_total=format(total,'0.2f')
-        return float_total
+
