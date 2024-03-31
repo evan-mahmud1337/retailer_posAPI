@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from .serializers import UserSerializer, UserLoginSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
 
 
 class UserRegistrationAPIView(APIView):

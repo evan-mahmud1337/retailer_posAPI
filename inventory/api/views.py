@@ -54,11 +54,14 @@ class InventoryDetailAPIView(APIView):
     def put(self, request, pk):
         try:
             inventory_item = InventoryItem.objects.get(pk=pk)
-            serializer = InventoryItemSerializer(inventory_item, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            stock = inventory_item.unit
+            unit = request.data.get('unit')
+            try:
+                stock += unit
+                inventory_item.save()
+                return Response({'success': f"stock updated, new stock {stock}"})
+            except Exception as e:
+                return f"somethinf went wrong with {e}"
         except InventoryItem.DoesNotExist:
             return Response({'error': 'Inventory item not found'}, status=status.HTTP_404_NOT_FOUND)
         

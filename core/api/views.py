@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from core.models import *
-from .serializers import ExpenseSerializer
+from .serializers import ExpenseSerializer, ExpenseCategorySerializer
 from rest_framework import status
 
 
@@ -14,10 +14,10 @@ class ExpenseCategoryView(APIView):
 
     def get(self, request, format=None):
         expenseCategpries = ExpenseCategory.objects.all()
-        serializer = ExpenseSerializer(expenseCategpries, many=True)
+        serializer = ExpenseCategorySerializer(expenseCategpries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     def post(self,request):
-        serializer = ExpenseSerializer(data=request.data)
+        serializer = ExpenseCategorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -35,8 +35,14 @@ class ExpenseView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        serializer = ExpenseSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        note = request.data.get('note', None)
+        amount = request.data.get('amount', None)
+        category_id = request.data.get('category', None)
+        date  = request.data.get('date', None)
+        try:
+            category = ExpenseCategory.objects.get(id=category_id)
+            expense = Expense.objects.create(category=category, amount=float(amount), note=note, date=date)
+            expense.save()
+            return Response({'success': 'successfully created'}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'error': f'something went wrong{e}'}, status=status.HTTP_400_BAD_REQUEST)

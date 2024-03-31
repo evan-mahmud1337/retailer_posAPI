@@ -1,0 +1,93 @@
+[
+    {
+      "model": "expenses.ExpenseCategory",
+      "pk": null,
+      "fields": {
+        "name": "Food",
+        "additionalInfo": "Expenses related to groceries, dining out, and other food-related costs."
+      }
+    },
+    {
+      "model": "expenses.ExpenseCategory",
+      "pk": null,
+      "fields": {
+        "name": "Bills & Utilities",
+        "additionalInfo": "Payments for rent, electricity, water, internet, and other recurring bills."
+      }
+    },
+    {
+      "model": "expenses.ExpenseCategory",
+      "pk": null,
+      "fields": {
+        "name": "Transportation",
+        "additionalInfo": "Costs associated with public transport, gas, car maintenance, and travel."
+      }
+    },
+    {
+      "model": "expenses.ExpenseCategory",
+      "pk": null,
+      "fields": {
+        "name": "Entertainment",
+        "additionalInfo": "Expenses for movies, concerts, hobbies, subscriptions, and other recreational activities."
+      }
+    },
+    {
+      "model": "expenses.ExpenseCategory",
+      "pk": null,
+      "fields": {
+        "name": "Personal Care",
+        "additionalInfo": "Costs for clothing, cosmetics, hygiene products, and self-care items."
+      }
+    },
+    {
+      "model": "expenses.Expense",
+      "pk": null,
+      "fields": {
+        "category": 1,
+        "amount": "50.00",
+        "note": "Groceries for the week",
+        "date": "2024-03-31"
+      }
+    },
+    {
+      "model": "expenses.Expense",
+      "pk": null,
+      "fields": {
+        "category": 2,
+        "amount": "120.00",
+        "note": "Electricity bill",
+        "date": "2024-03-25"
+      }
+    },
+    {
+      "model": "expenses.Expense",
+      "pk": null,
+      "fields": {
+        "category": 3,
+        "amount": "25.00",
+        "note": "Bus fare for the month",
+        "date": "2024-03-20"
+      }
+    },
+    {
+      "model": "expenses.Expense",
+      "pk": null,
+      "fields": {
+        "category": 4,
+        "amount": "15.00",
+        "note": "Movie ticket",
+        "date": "2024-03-28"
+      }
+    },
+    {
+      "model": "expenses.Expense",
+      "pk": null,
+      "fields": {
+        "category": 5,
+        "amount": "30.00",
+        "note": "Shampoo and toothpaste",
+        "date": "2024-03-22"
+      }
+    }
+  ]
+  
