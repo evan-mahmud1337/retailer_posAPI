@@ -1,1 +1,11 @@
 /.env
+/rPos/__pycache__
+/db.sqlite3
+/customer_info/__pycache__
+customer_info/api/__pycache__
+/account/
+/core
+inventory
+rPos/__pycache__
+account/migrations/__pycache__/
+accocoreunt/migrations/__pycache__/

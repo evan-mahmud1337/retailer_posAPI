@@ -1,6 +1,6 @@
 [
     {
-      "model": "expenses.ExpenseCategory",
+      "model": "core.ExpenseCategory",
       "pk": null,
       "fields": {
         "name": "Food",
@@ -8,7 +8,7 @@
       }
     },
     {
-      "model": "expenses.ExpenseCategory",
+      "model": "core.ExpenseCategory",
       "pk": null,
       "fields": {
         "name": "Bills & Utilities",
@@ -16,7 +16,7 @@
       }
     },
     {
-      "model": "expenses.ExpenseCategory",
+      "model": "core.ExpenseCategory",
       "pk": null,
       "fields": {
         "name": "Transportation",
@@ -24,7 +24,7 @@
       }
     },
     {
-      "model": "expenses.ExpenseCategory",
+      "model": "core.ExpenseCategory",
       "pk": null,
       "fields": {
         "name": "Entertainment",
@@ -32,7 +32,7 @@
       }
     },
     {
-      "model": "expenses.ExpenseCategory",
+      "model": "core.ExpenseCategory",
       "pk": null,
       "fields": {
         "name": "Personal Care",
@@ -40,7 +40,7 @@
       }
     },
     {
-      "model": "expenses.Expense",
+      "model": "core.Expense",
       "pk": null,
       "fields": {
         "category": 1,
@@ -50,7 +50,7 @@
       }
     },
     {
-      "model": "expenses.Expense",
+      "model": "core.Expense",
       "pk": null,
       "fields": {
         "category": 2,
@@ -60,7 +60,7 @@
       }
     },
     {
-      "model": "expenses.Expense",
+      "model": "core.Expense",
       "pk": null,
       "fields": {
         "category": 3,
@@ -70,7 +70,7 @@
       }
     },
     {
-      "model": "expenses.Expense",
+      "model": "core.Expense",
       "pk": null,
       "fields": {
         "category": 4,
@@ -80,7 +80,7 @@
       }
     },
     {
-      "model": "expenses.Expense",
+      "model": "core.Expense",
       "pk": null,
       "fields": {
         "category": 5,
