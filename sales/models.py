@@ -35,3 +35,12 @@ class SaleItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity}x {self.item.name} ({self.size} size)"
+
+
+class SalesReturn(models.Model):
+    sale = models.ForeignKey(Sale, on_delete=models.CASCADE, related_name= 'returns_set')
+    reason = models.TextField(blank=True, null=True, max_length=500)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return  f"Return for Sale #{self.sale.id}, Reason: {self.reason[:30] + '...' if len(self.reason) > 33 else self.reason}"
