@@ -5,12 +5,12 @@ from rest_framework.authentication import TokenAuthentication
 from core.models import *
 from .serializers import ExpenseSerializer
 from rest_framework import status
-
+from permission.permissions import *
 
 
 class ExpenseCategoryView(APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsManagerOrAbove]
 
     def get(self, request, format=None):
         expenseCategpries = ExpenseCategory.objects.all()
@@ -27,7 +27,7 @@ class ExpenseCategoryView(APIView):
 
 class ExpenseView(APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsManagerOrAbove]
 
     def get(self, request):
         expenses = Expense.objects.all()

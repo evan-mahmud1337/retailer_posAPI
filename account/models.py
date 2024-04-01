@@ -38,6 +38,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
@@ -51,7 +52,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def has_module_perms(self, app_label):
         return True
-
+  
 @receiver(post_save, sender=get_user_model())
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
