@@ -35,7 +35,7 @@ class SalesReturnSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SalesReturn
-        fields = ('id', 'date', 'sale_created_date', 'sale_delivery_cost', 'sale_total', 'customer', 'sale')
+        fields = ('id', 'date', 'sale_created_date', 'sale_delivery_cost', 'sale_total', 'customer', 'sale', 'curierInvoice')
 
     def get_sale_created_date(self, obj):
         sale = obj.sale

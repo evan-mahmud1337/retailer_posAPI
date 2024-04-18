@@ -6,6 +6,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from inventory.models import *
 from .serializers import *
+from decimal import Decimal, InvalidOperation
+from rest_framework.exceptions import ValidationError
 
 
 
@@ -26,8 +28,8 @@ class InventoryCategoryView(APIView):
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class InventoryListAPIView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request):
         inventory_items = InventoryItem.objects.all()
@@ -36,23 +38,42 @@ class InventoryListAPIView(APIView):
 
     def post(self, request):
         itemname = request.data.get('itemName')
-        category = request.data.get('category')
-        otherCost = request.data.get('otherCost')
-        transportationCost = request.data.get('transportationCost')
+        category_id = request.data.get('category')
+        otherCost = Decimal(request.data.get('otherCost'))
+        invImage = request.data.get('image', None)
+        transportationCost = Decimal(request.data.get('transportationCost'))
         unit = request.data.get('unit')
-        inventoryCost = request.data.get('inventoryCost')
-        inventoryCost = float(inventoryCost)
-        productCost = int(otherCost)+int(transportationCost) / int(unit)
-        try :
-            inventory_catagory = InventoryCategory.objects.get(id=category)
-            inventory = InventoryItem.objects.create(category=inventory_catagory, itemName=itemname, 
-                                                     otherCost=otherCost, transportationCost=transportationCost,unit=unit,
-                                                     productCost=productCost, inventoryCost=inventoryCost,
-                                                     )
-            inventory.save()
-            return Response({'success': 'successfully created '}, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            return Response({'error': {e}})
+        mrp = request.data.get('mrp')
+        color = request.data.get('color')
+        is_variant = request.data.get('is_variant', False)
+
+        try:
+            inventory_category = InventoryCategory.objects.get(id=category_id)
+            inventoryCost = Decimal(request.data.get('inventoryCost'))
+            productCost = otherCost + transportationCost + inventoryCost / int(unit)
+
+            inventory = InventoryItem.objects.create(
+                category=inventory_category,
+                itemName=itemname,
+                otherCost=otherCost,
+                transportationCost=transportationCost,
+                unit=unit,
+                productCost=productCost,
+                inventoryCost=inventoryCost,
+                invImage=invImage,
+                mrp=mrp,
+                color=color,
+                is_variant=is_variant,
+            )
+
+            unit_per_size = request.data.get('unit_per_size', None)
+            if unit_per_size and is_variant:
+                for size, units in unit_per_size.items():
+                    Variant.objects.create(item=inventory, size=size, unit=units)
+
+            return Response({'success': 'Successfully created inventory item'}, status=status.HTTP_201_CREATED)
+        except (ValueError, InventoryCategory.DoesNotExist) as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class InventoryDetailAPIView(APIView):
     authentication_classes = [TokenAuthentication]
@@ -70,17 +91,35 @@ class InventoryDetailAPIView(APIView):
         try:
             inventory_item = InventoryItem.objects.filter(id=pk)
             unit = request.data.get('unit')
-            otherCost = request.data.get('otherCost')
-            transportationCost = request.data.get('transportationCost')
+
+            # Validate unit type
+            if not isinstance(unit, int):
+                raise ValidationError({'unit': 'Unit must be an integer'})
 
             try:
-                inventory_item.update(unit=int(unit), otherCost=int(otherCost), transportationCost=int(transportationCost),)
-                inventory_item.save()
-                return Response({'success': f"stock updated, new stock {unit}"}, status=status.HTTP_201_CREATED)
-            except Exception as e:
-                return Response({'error': '{e}'}, status=status.HTTP_400_BAD_REQUEST)
+                costs = {
+                    'otherCost': Decimal(request.data.get('otherCost')),
+                    'transportationCost': Decimal(request.data.get('transportationCost')),
+                    'inventoryCost': Decimal(request.data.get("inventoryCost")),
+                    'productCost': Decimal(request.data.get('productCost'))
+                }
+            except InvalidOperation as e:
+                raise ValidationError({'error': 'Invalid decimal value: ' + str(e)})
+
+            for field, value in costs.items():
+                if value is None:
+                    del costs[field]
+
+            updated_fields = {'unit': int(unit)}
+            updated_fields.update(costs)
+
+            inventory_item.update(**updated_fields)
+            return Response({'success': f"Stock updated, new stock {unit}"}, status=status.HTTP_200_OK)
         except InventoryItem.DoesNotExist:
             return Response({'error': 'Inventory item not found'}, status=status.HTTP_404_NOT_FOUND)
+        except ValidationError as e:
+            return Response({'error': e.detail}, status=status.HTTP_400_BAD_REQUEST)
+
 
     def delete(self, request, pk):
         try:

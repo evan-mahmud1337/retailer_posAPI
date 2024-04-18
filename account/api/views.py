@@ -19,16 +19,18 @@ class UserRegistrationAPIView(APIView):
 class UserLoginAPIView(APIView):
     def post(self, request):
         email = request.data.get('email', None)
-        password = request.data.get('password',None)
+        password = request.data.get('password', None)
         user = authenticate(username=email, password=password)
         if user is not None:
             try:
                 name = user.username
                 user_type = user.user_type
-                token = Token.objects.get(user=user)
+                token, _ = Token.objects.get_or_create(user=user)  # Use get_or_create
                 return Response({'token': token.key, 'name': name, 'user_type': user_type})
-            except  Token.DoesNotExist:
-                return Response({'error': 'error'}, status=status.HTTP_400_BAD_REQUEST)
+            except Token.DoesNotExist:
+                return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)  # Specific error
+        else:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class ChangePasswordAPIView(APIView):
     authentication_classes = [TokenAuthentication]
